@@ -1,5 +1,5 @@
 import type { Itask } from "@/types/types";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
 interface InitialState {
@@ -7,42 +7,23 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  task: [
-    {
-      id: "hello1234",
-      title: "don't forget",
-      description: "Create Home pate",
-      dueDate: "2025-11",
-      isCompleted: false,
-      priority: "Low",
-    },
-    {
-      id: "hello1234d",
-      title: "don't forget",
-      description: "Create Home pate",
-      dueDate: "2025-11",
-      isCompleted: false,
-      priority: "High",
-    },
-    {
-      id: "hello1234c",
-      title: "don't forget update",
-      description: "Create Home pate",
-      dueDate: "2025-11",
-      isCompleted: false,
-      priority: "High",
-    },
-  ],
+  task: [],
 };
 
 const taskSlice = createSlice({
   name: "task",
   initialState,
-  reducers: {},
+  reducers: {
+    addTask: (state, action: PayloadAction<Itask>) => {
+      state.task.push(action.payload);
+    },
+  },
 });
 
 export const selectTasks = (state: RootState) => {
   return state.task.task;
 };
+
+export const { addTask } = taskSlice.actions;
 
 export default taskSlice.reducer;
